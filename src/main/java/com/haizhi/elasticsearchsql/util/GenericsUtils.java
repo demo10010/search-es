@@ -1,4 +1,4 @@
-package com.haizhi.elasticsearchsql.utils;
+package com.haizhi.elasticsearchsql.util;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

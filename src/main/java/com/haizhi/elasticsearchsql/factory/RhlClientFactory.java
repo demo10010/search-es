@@ -1,19 +1,15 @@
-package com.haizhi.elasticsearchsql.conf;
+package com.haizhi.elasticsearchsql.factory;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.frameworkset.elasticsearch.scroll.DefualtScrollHandler;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.IOException;
 
-@Configuration
 @Slf4j
-public class ESClientSpringFactory {
+public class RhlClientFactory {
 
     private static int CONNECT_TIMEOUT_MILLIS = 1000;
     private static int SOCKET_TIMEOUT_MILLIS = 30000;
@@ -26,27 +22,20 @@ public class ESClientSpringFactory {
     private RestClient restClient;
     private RestHighLevelClient restHighLevelClient;
 
-    private static ESClientSpringFactory esClientSpringFactory = new ESClientSpringFactory();
+    private static final RhlClientFactory rhlClientFactory = new RhlClientFactory();
 
-    public ESClientSpringFactory() {
+    private RhlClientFactory() {
     }
 
-    public static ESClientSpringFactory build(HttpHost[] httpHost, Integer maxConnectNum, Integer maxConnectPerRoute) {
+    public static RhlClientFactory getRhlClientFactory() {
+        return rhlClientFactory;
+    }
+
+    public RhlClientFactory build(HttpHost[] httpHost, Integer maxConnectNum, Integer maxConnectPerRoute) {
         HTTP_HOST = httpHost;
         MAX_CONN_TOTAL = maxConnectNum;
         MAX_CONN_PER_ROUTE = maxConnectPerRoute;
-        return esClientSpringFactory;
-    }
-
-    public static ESClientSpringFactory build(HttpHost[] httpHost, Integer connectTimeOut, Integer socketTimeOut,
-                                              Integer connectionRequestTime, Integer maxConnectNum, Integer maxConnectPerRoute) {
-        HTTP_HOST = httpHost;
-        CONNECT_TIMEOUT_MILLIS = connectTimeOut;
-        SOCKET_TIMEOUT_MILLIS = socketTimeOut;
-        CONNECTION_REQUEST_TIMEOUT_MILLIS = connectionRequestTime;
-        MAX_CONN_TOTAL = maxConnectNum;
-        MAX_CONN_PER_ROUTE = maxConnectPerRoute;
-        return esClientSpringFactory;
+        return rhlClientFactory;
     }
 
     public void init() {
@@ -55,11 +44,10 @@ public class ESClientSpringFactory {
         setMutiConnectConfig();
         restClient = builder.build();
         restHighLevelClient = new RestHighLevelClient(builder);
-        log.info("es RestClient init");
     }
 
     // 配置连接时间延时
-    public void setConnectTimeOutConfig() {
+    private void setConnectTimeOutConfig() {
         builder.setRequestConfigCallback(requestConfigBuilder -> {
             requestConfigBuilder.setConnectTimeout(CONNECT_TIMEOUT_MILLIS);
             requestConfigBuilder.setSocketTimeout(SOCKET_TIMEOUT_MILLIS);
@@ -93,6 +81,6 @@ public class ESClientSpringFactory {
                 e.printStackTrace();
             }
         }
-        log.info("client closed ");
+        log.info("RestClient client closed ");
     }
 }

@@ -48,11 +48,7 @@ import java.util.stream.Collectors;
 @Api(description = "基于sql查询ES")
 @Slf4j
 public class EsHighLevelClientController {
-//    @Value("${elasticsearch.ips}")
-//    private String esIps;
 
-    //    @Qualifier("getRHLClient")
-    @Qualifier("getRHLClient")
     @Autowired
     private RestHighLevelClient restHighLevelClient;
 

@@ -21,7 +21,6 @@ import java.io.IOException;
 @Service
 public class EsCurlDemoServiceImpl implements EsCurlDemoService {
 
-    @Qualifier("getRHLClient")
     @Autowired
     private RestHighLevelClient restHighLevelClient;
 

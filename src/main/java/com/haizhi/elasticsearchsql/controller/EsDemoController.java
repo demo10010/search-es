@@ -2,7 +2,7 @@ package com.haizhi.elasticsearchsql.controller;
 
 import com.google.common.collect.Lists;
 import com.haizhi.elasticsearchsql.entity.Teacher;
-import com.haizhi.elasticsearchsql.utils.ESUtil;
+import com.haizhi.elasticsearchsql.util.ESUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

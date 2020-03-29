@@ -1,4 +1,4 @@
-package com.haizhi.elasticsearchsql.utils;
+package com.haizhi.elasticsearchsql.util;
 
 import org.frameworkset.elasticsearch.client.ClientInterface;
 import org.frameworkset.elasticsearch.entity.ESDatas;
